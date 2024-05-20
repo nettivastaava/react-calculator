@@ -11,3 +11,56 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.main-view {
+  width: 300px;
+  margin: 100px auto;
+}
+
+.button-panel {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.button {
+  height: 50px;
+  font-size: 1.5em;
+  margin: 2px;
+  cursor: pointer;
+}
+
+.display {
+  background: #C8C8C8;
+  font-size: 2em;
+  padding: 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  height: 100px;
+}
+
+.result {
+  text-align: right;
+  width: 100%;
+  font-size: 1em;
+}
+
+.operation {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  font-size: 1em;
+}
+
+.current-value, .operator {
+  margin-left: 5px;
+}
+
+.current-value {
+  font-size: 1em;
+}
+
+.operator {
+  font-size: 1em;
+}
