@@ -1,0 +1,24 @@
+name: Run Cypress Tests
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+  
+      - name: Install dependencies
+        run: npm install
+  
+      - name: Start application
+        run: |
+          npm start &
+          npx wait-on http://localhost:3000
+  
+      - name: Wait for application to start
+        run: npx wait-on http://localhost:3000
+  
+      - name: Run Cypress tests
+        run: npm run cypress:run
