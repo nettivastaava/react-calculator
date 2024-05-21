@@ -12,8 +12,8 @@ const ButtonGrid = ({ onButtonClick }) => {
 
   return (
     <div className="button-panel">
-      {buttons.map((button, index) => (
-        <Button key={'button-' + index} value={button} onClick={onButtonClick} />
+      {buttons.map(button => (
+        <Button value={button} onClick={onButtonClick} />
       ))}
     </div>
   )
