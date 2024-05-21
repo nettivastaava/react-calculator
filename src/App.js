@@ -3,65 +3,63 @@ import ButtonGrid from "./components/ButtonGrid"
 import ResultDisplay from "./components/ResultDisplay"
 
 const App = () => {
-  const [displayValue, setDisplayValue] = useState('0')
-  const [storedValue, setStoredValue] = useState(null)
-  const [operator, setOperator] = useState(null)
+  const [result, setResult] = useState('')
+  const [currentInput, setCurrentInput] = useState('')
+  const [previousValue, setPreviousValue] = useState('')
+  const [operator, setOperator] = useState('')
   const [waitingForNewValue, setWaitingForNewValue] = useState(false)
+  const [isResultDisplayed, setIsResultDisplayed] = useState(false)
 
-  const handleButtonClick = (action) => {
+  const handleButtonClick = action => {
     const operators = {
       '+': handleOperator,
       '-': handleOperator,
       '×': handleOperator,
       '÷': handleOperator,
-      '=': handleEqual,
-      'C': handleClear
+      '=': handleEqual
     }
 
     if (operators[action]) {
       operators[action](action)
     } else {
       handleNumber(action)
+      setIsResultDisplayed(false)
     }
   }
 
   const handleOperator = (action) => {
-    if (storedValue === null) {
-      setStoredValue(parseFloat(displayValue))
+    if (previousValue === '') {
+      setPreviousValue(parseFloat(currentInput))
     } else if (operator) {
-      const currentValue = parseFloat(displayValue)
-      const newValue = calculate[operator](storedValue, currentValue)
-      setStoredValue(newValue)
-      setDisplayValue(String(newValue))
+      const currentValue = parseFloat(currentInput)
+      const newValue = calculate[operator](previousValue, currentValue)
+      setPreviousValue(newValue)
     }
+    setCurrentInput('')
     setOperator(action)
     setWaitingForNewValue(true)
+    setIsResultDisplayed(false)
   }
 
   const handleEqual = () => {
-    if (operator && storedValue !== null) {
-      const currentValue = parseFloat(displayValue)
-      const newValue = calculate[operator](storedValue, currentValue)
-      setDisplayValue(String(newValue))
-      setStoredValue(null)
-      setOperator(null)
+    if (operator && previousValue !== '') {
+      const currentValue = parseFloat(currentInput)
+      const newValue = calculate[operator](previousValue, currentValue)
+      setCurrentInput(String(newValue))
+      setResult(newValue)
+      setPreviousValue('')
+      setOperator('')
       setWaitingForNewValue(true)
+      setIsResultDisplayed(true)
     }
-  }
-
-  const handleClear = () => {
-    setDisplayValue('0')
-    setStoredValue(null)
-    setOperator(null)
-    setWaitingForNewValue(false)
   }
 
   const handleNumber = number => {
     if (waitingForNewValue) {
-      setDisplayValue(number)
+      setCurrentInput(number)
       setWaitingForNewValue(false)
     } else {
-      setDisplayValue(displayValue === '0' ? number : displayValue + number)
+      setCurrentInput(currentInput === '' ? number : currentInput + number)
     }
   }
 
@@ -74,8 +72,13 @@ const App = () => {
 
   return (
     <div class="main-view">
-      <h1>Calculator</h1>
-      <ResultDisplay value={storedValue} result={displayValue} />
+      <ResultDisplay 
+        previousValue={previousValue} 
+        currentInput={currentInput} 
+        result={result} 
+        operator={operator} 
+        isResultDisplayed={isResultDisplayed}
+      />
       <ButtonGrid onButtonClick={handleButtonClick}/>
     </div>
   )
