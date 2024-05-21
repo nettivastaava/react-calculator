@@ -3,10 +3,6 @@ describe('Calculator', () => {
     cy.visit('http://localhost:3000')  
   })
 
-  it('just test', () => {
-    cy.contains('1')
-  })
-
   it('calculates correctly addition', () => {
     cy.get('#button-1').click()
     cy.get('#button-\\+').click()
