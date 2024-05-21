@@ -12,7 +12,7 @@ describe('Calculator', () => {
     cy.get('div.result').contains('2')
   })
 
-  it('calculates correctly substraction', () => {
+  it('calculates correctly subtraction', () => {
     cy.get('#button-2').click()
     cy.get('#button--').click()
     cy.get('#button-1').click()
